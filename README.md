@@ -20,7 +20,11 @@ This guide provides a step‑by‑step protocol for setting up and running a mol
 - Create separate `protein.pdb` and `ligand.pdb` files from the `complex.pdb` file
 
 ### 1.1 Process the protein
-- After creating the `protein.pdb` file, run this:
+
+### Download CHARMM36 Force field (Optional)
+- Download CHARMM36 force field from [MacKerell lab website](https://mackerell.umaryland.edu/charmm_ff.shtml#gromacs) (Extract the tarball in the working directrory)
+- Also download `cgenff_charmm2gmx_py3_nx2.py` conversion script from the same website
+- Now, generate the topology of the protein:
 
 ```bash
 gmx pdb2gmx -f protein.pdb -o protein_processed.gro -p protein_topol.top
@@ -29,10 +33,6 @@ gmx pdb2gmx -f protein.pdb -o protein_processed.gro -p protein_topol.top
 During the run, you will be prompted to select:
 - Force field (e.g., CHARMM36, Amber99SB, OPLS)
 - Water model (e.g., TIP3P)
-
-### Download CHARMM36 Force field (Optional)
-- Download CHARMM36 force field from [MacKerell lab website](https://mackerell.umaryland.edu/charmm_ff.shtml#gromacs)
-- Also download `cgenff_charmm2gmx_py3_nx2.py` conversion script from the same website
 
 ### 1.2 Generate ligand topology
 
