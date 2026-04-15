@@ -1,4 +1,4 @@
-# Protein–Ligand Molecular Dynamics Simulation with GROMACS
+# Protein-Ligand Molecular Dynamics Simulation with GROMACS
 
 This guide provides a step‑by‑step protocol for setting up and running a molecular dynamics (MD) simulation of a **protein–ligand complex** using GROMACS. It covers ligand topology generation, system building, solvation, ion addition, energy minimization, equilibration (NVT/NPT), production MD, and post‑processing.
 
@@ -36,11 +36,12 @@ During the run, you will be prompted to select:
 
 ### 1.2 Generate ligand topology
 - Add hydrogens to the ligand using [Avogadro](https://avogadro.cc/) and save as `.mol2`.
-- Fix bond order in the `.mol2` file using a [Perl script](http://www.mdtutorials.com/gmx/complex/Files/sort_mol2_bonds.pl).
-- Generate ligand topology using [CGenFF](https://cgenff.com/):
+- Fix bond order in the `.mol2` file using a [Perl script](http://www.mdtutorials.com/gmx/complex/Files/sort_mol2_bonds.txt).
+- Generate ligand topology using [CGenFF](https://cgenff.com/) (Create account to use CGenFF):
     - Upload your `.mol2` file → get `ligand.str` and `ligand_fix.mol2`.
 
 - Convert CHARMM to GROMACS format:
+- Use `cgenff_charmm2gmx.py` script downloaded from [MacKerell lab website](https://mackerell.umaryland.edu/charmm_ff.shtml#gromacs)
 
 ```bash
 python cgenff_charmm2gmx.py ligand ligand_fix.mol2 ligand.str charmm36-jul2022.ff
