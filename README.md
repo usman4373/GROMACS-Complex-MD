@@ -7,7 +7,7 @@ This guide provides a step‑by‑step protocol for setting up and running a mol
 - [GROMACS](https://www.gromacs.org/) (2020 or later) installed with GPU support (optional but recommended)
 - Protein structure file (`protein.pdb`) and ligand structure file (`ligand.pdb` or `.mol2`)
 - Parameter files (`ions.mdp`, `em.mdp`, `nvt.mdp`, `npt.mdp`, `md.mdp`) – obtain from [standard GROMACS tutorials](http://www.mdtutorials.com/gmx/)
-- For ligand topology: [CGenFF](https://cgenff.umaryland.edu/) (or other force field tools) and the `cgenff_charmm2gmx.py` script
+- For ligand topology: [CGenFF](https://cgenff.com/) (or other force field tools) and the `cgenff_charmm2gmx.py` script
 
 > **Note:** The ligand topology generation is force‑field specific. This guide uses **CHARMM36** (via CGenFF) as an example. Adjust if using another force field.
 
@@ -265,13 +265,4 @@ Instead of manually plotting each `.xvg` file, you can use the **[Dynamics‑Vis
 3. **Run the app**:
    ```bash
    streamlit run app.py
-
-
-
-
-
-
-
-
-
-
+   ```
