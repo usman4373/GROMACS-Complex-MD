@@ -1,6 +1,6 @@
 # Protein–Ligand Molecular Dynamics Simulation with GROMACS
 
-This guide provides a step‑by‑step protocol to set up and run a molecular dynamics (MD) simulation of a **protein–ligand complex** using GROMACS. It covers ligand topology generation, system building, solvation, ion addition, energy minimization, equilibration (NVT/NPT), production MD, and post‑processing.
+This guide provides a step‑by‑step protocol for setting up and running a molecular dynamics (MD) simulation of a **protein–ligand complex** using GROMACS. It covers ligand topology generation, system building, solvation, ion addition, energy minimization, equilibration (NVT/NPT), production MD, and post‑processing.
 
 ## Prerequisites
 
@@ -179,8 +179,92 @@ gmx mdrun -v -s md_10ns.tpr -deffnm md_10ns -nb gpu -pme gpu -bonded gpu
 - Use `-deffnm` to set the base name of all output files (e.g., `md_50ns.gro`, `md_50ns.xtc`).
 
 ## Step 7: Post‑processing and analysis
+<p align="justify">After the production MD run, the trajectory may contain artifacts due to periodic boundary conditions (PBC). Molecules can diffuse across box boundaries, making them appear “broken” or “jumping”. The first step is to correct this by centering the protein and removing PBC jumps.</p>
 
+### 7.1 Remove periodic boundary effects
 
+```bash
+gmx trjconv -s md_10ns.tpr -f md_10ns.xtc -o md_50ns_center.xtc -center -pbc mol -ur compact
+```
+
+During execution, you will be prompted twice:
+
+- Select group for centering – choose the protein (typically group 1).
+- Select group for output – choose the system (group 0).
+- Now use `md_50ns_center.xtc` for all downstream analysis.
+ 
+### 7.2 Common structural analyses
+All analyses below use the corrected trajectory (`md_50ns_center.xtc`) and the run input file (`md_10ns.tpr`).
+
+### 7.2.1 RMSD – Root Mean Square Deviation
+
+Measures how much the protein structure deviates from a reference (usually the starting structure) over time.
+
+```bash
+gmx rms -s md_10ns.tpr -f md_50ns_center.xtc -o RMSD.xvg -tu ns
+```
+At the prompts:
+- For least squares fit – choose
+- For RMSD calculation – choose
+
+**Output:** `RMSD.xvg` (RMSD in `nm` vs. time in `ns`)
+
+### 7.2.2 Radius of gyration (rGyr)
+Indicates the compactness of the protein.
+
+```bash
+gmx gyrate -s md_10ns.tpr -f md_50ns_center.xtc -o gyrate.xvg
+```
+
+At prompt:
+- Select group – choose
+
+**Output:** `gyrate.xvg` (radius of gyration in `nm`)
+
+### 7.2.3 RMSF – Root Mean Square Fluctuation
+Per‑residue flexibility (requires an index file with residue numbers).
+
+```bash
+gmx rmsf -s md_10ns.tpr -f md_50ns_center.xtc -o rmsf.xvg -res
+```
+
+At prompt:
+- Select group for fitting – usually 4 (Backbone)
+- Select group for RMSF – 4 (Backbone) or 1 (Protein) – use `-res` to get per‑residue output.
+
+**Output:** `rmsf.xvg` (RMSF in `nm` per residue)
+
+### 7.2.4 SASA – Solvent Accessible Surface Area
+Measures the surface area exposed to solvent.
+
+```bash
+gmx sasa -s md_10ns.tpr -f md_50ns_center.xtc -o sasa.xvg -or resarea.xvg
+```
+At prompt:
+- Select group – 
+
+**Outputs:**
+- `sasa.xvg` – total SASA over time (`nm²`)
+- `resarea.xvg` – residue‑wise SASA
+
+### 7.3 Automated plotting and advanced analysis with Dynamics‑Visualizer
+
+Instead of manually plotting each `.xvg` file, you can use the **[Dynamics‑Visualizer](https://github.com/usman4373/Dynamics-Visualizer)** – a Streamlit‑based app that automates post‑MD analysis and visualization for GROMACS trajectories.
+
+#### What it does
+
+- **Standard analyses** – Reads `.xvg` files (RMSD, RMSF, SASA, radius of gyration) and produces publication‑ready time‑series plots.
+- **Principal Component Analysis (PCA)** – Computes and plots PCA for protein‑only or protein‑ligand systems with time‑based colour bars.
+- **Dynamic Cross‑Correlation Matrix (DCCM)** – Generates heatmaps showing correlated motions between residues (and ligand, if present).
+- **Trajectory visualizer** – Extracts frames from your `.xtc` trajectory, renders PNGs using PyMOL, and assembles MP4 videos of the simulation.
+
+#### How to use it
+
+1. **Install** the tool (see [its README](https://github.com/usman4373/Dynamics-Visualizer) for conda/pip instructions, including PyMOL).
+2. **Prepare your data** – Use the **centered trajectory** (`md_10ns_noPBC.xtc`) and the run input file (`md_10ns.tpr`) from Step 7.1.
+3. **Run the app**:
+   ```bash
+   streamlit run app.py
 
 
 
