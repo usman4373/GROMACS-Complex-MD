@@ -34,6 +34,8 @@ During the run, you will be prompted to select:
 - Force field (e.g., CHARMM36, Amber99SB, OPLS)
 - Water model (e.g., TIP3P)
 
+> If writing the topology of a protein fails due to hydrogen atoms mismatch, then use `-ignh` in the above command. It will let GROMACS rebuild hydrogens correctly
+
 ### 1.2 Generate ligand topology
 - Add hydrogens to the ligand using [Avogadro](https://avogadro.cc/) and save as `.mol2`.
 - Fix bond order in the `.mol2` file using a [Perl script](http://www.mdtutorials.com/gmx/complex/Files/sort_mol2_bonds.txt).
