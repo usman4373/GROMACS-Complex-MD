@@ -115,13 +115,70 @@ gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutra
 
 > When prompted, select the SOL group (water) – this ensures ions are placed only in the solvent region.
 
+## Step 4: Energy minimization
 
+```bash
+gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr
+gmx mdrun -v -s em.tpr -deffnm em -nb gpu
+```
 
+## Step 5: Equilibration (NVT and NPT)
 
+For a protein–ligand complex, we apply position restraints to the ligand (and optionally to the protein backbone) and use separate temperature coupling groups.
 
+### 5.1 Create index file and ligand restraints
 
+```bash
+gmx make_ndx -f ligand.gro -o index_lig.ndx
+```
 
+Then generate restraints for the ligand:
 
+```bash
+gmx genrestr -f ligand.gro -n index_lig.ndx -o posre_lig.itp -fc 1000 1000 1000
+```
+
+Now edit `topol.top` to include `#include "posre_lig.itp"` after the ligand topology include, and before [ molecules ].
+
+### 5.2 Prepare a combined index for temperature coupling
+
+Create an index file that merges protein and ligand into one group (for temperature coupling) or keeps them separate as needed.
+
+```bash
+gmx make_ndx -f em.gro -o index.ndx
+```
+Inside the interactive prompt:
+
+- Type 1 | 13 (assuming 1 = protein, 13 = ligand) → creates group 14 (Protein_Ligand).
+- Type q to quit.
+- Note: The group numbers may differ. Use gmx make_ndx without arguments to list groups.
+
+### 5.3 NVT equilibration (constant temperature)
+
+```bash
+gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -n index.ndx -o nvt.tpr
+gmx mdrun -v -s nvt.tpr -deffnm nvt -nb gpu -pme gpu -bonded gpu
+```
+> The `-r` flag uses the minimized coordinates as a reference for restraints.
+
+### 5.4 NPT equilibration (constant pressure)
+
+```bash
+gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt.tpr
+gmx mdrun -v -s npt.tpr -deffnm npt -nb gpu -pme gpu -bonded gpu
+```
+
+## Step 6: Production MD simulation
+
+```bash
+gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o md_10ns.tpr
+gmx mdrun -v -s md_10ns.tpr -deffnm md_10ns -nb gpu -pme gpu -bonded gpu
+```
+
+- To run `50 ns`, modify nsteps in `md.mdp` accordingly.
+- Use `-deffnm` to set the base name of all output files (e.g., `md_50ns.gro`, `md_50ns.xtc`).
+
+## Step 7: Post‑processing and analysis
 
 
 
