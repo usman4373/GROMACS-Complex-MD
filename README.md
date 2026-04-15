@@ -35,12 +35,9 @@ During the run, you will be prompted to select:
 - Water model (e.g., TIP3P)
 
 ### 1.2 Generate ligand topology
-
-If your ligand is not a standard residue, pdb2gmx will fail. Follow this external workflow:
-
-- Add hydrogens to the ligand using Avogadro and save as `.mol2`.
-- Fix bond order in the `.mol2` file using a Perl script (provided in this repository).
-- Generate ligand topology using CGenFF:
+- Add hydrogens to the ligand using [Avogadro](https://avogadro.cc/) and save as `.mol2`.
+- Fix bond order in the `.mol2` file using a [Perl script](http://www.mdtutorials.com/gmx/complex/Files/sort_mol2_bonds.pl).
+- Generate ligand topology using [CGenFF](https://cgenff.com/):
     - Upload your `.mol2` file → get `ligand.str` and `ligand_fix.mol2`.
 
 - Convert CHARMM to GROMACS format:
@@ -49,7 +46,7 @@ If your ligand is not a standard residue, pdb2gmx will fail. Follow this externa
 python cgenff_charmm2gmx.py ligand ligand_fix.mol2 ligand.str charmm36-jul2022.ff
 ```
 
-This produces a ligand topology file (e.g., ligand.itp) and a gro file.
+This produces a ligand topology file (e.g., `ligand.itp`) and a `.gro` file.
 
 ### 1.3 Convert ligand PDB to GRO
 
