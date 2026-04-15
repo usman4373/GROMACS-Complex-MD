@@ -38,7 +38,12 @@ During the run, you will be prompted to select:
 
 ### 1.2 Generate ligand topology
 - Add hydrogens to the ligand using [Avogadro](https://avogadro.cc/) and save as `.mol2`.
-- Fix bond order in the `.mol2` file using a [Perl script](http://www.mdtutorials.com/gmx/complex/Files/sort_mol2_bonds.txt).
+- Fix bond order in the `.mol2` file using a [Perl script](http://www.mdtutorials.com/gmx/complex/Files/sort_mol2_bonds.txt):
+
+```bash
+perl sort_mol2_bonds.pl ligand.mol2 ligand_fix.mol2
+```
+
 - Generate ligand topology using [CGenFF](https://cgenff.com/) (Create account to use CGenFF):
     - Upload your `.mol2` file → get `ligand.str` and `ligand_fix.mol2`.
 
