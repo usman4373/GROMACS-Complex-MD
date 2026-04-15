@@ -56,6 +56,13 @@ python cgenff_charmm2gmx_py3_nx2.py ligand ligand_fix.mol2 ligand_fix.str charmm
 
 This produces a ligand topology file (e.g., `ligand_fix.itp`) and a `.gro` file.
 
+> **Tip:** If the above command does not run due to compatibility issues, then run this:
+> ```bash
+> conda create -n cgenff python=3.7
+> conda activate cgenff
+> pip install networkx==2.3
+> ```
+
 ### 1.3 Convert ligand PDB to GRO
 
 ```bash
