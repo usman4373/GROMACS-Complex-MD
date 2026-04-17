@@ -147,18 +147,72 @@ GASTEIGER
 
 ### Second Change
 - Fix the residue names and numbers such that they are all the same
+> If the `ligand.mol2` file contains more than 1 molecule, then make changes accordingly
 
-With both changes, the file should look like this:
+- After both changes, the file should look like this:
 
 ```bash
+@<TRIPOS>MOLECULE
+LIG
+ 45 47 0 0 0
+SMALL
+GASTEIGER
 
+@<TRIPOS>ATOM
+      1 C          17.1008   29.8156   -2.3788 C.3     1  LIG         0.1918
+      2 O          16.4529   30.9539   -1.8211 O.3     1  LIG        -0.3404
+      3 C          16.3137   31.9810   -2.7818 C.3     1  LIG         0.1130
+      4 C          15.1994   31.6049   -3.7917 C.3     1  LIG         0.1119
+      5 O          15.4453   32.2673   -5.0067 O.3     1  LIG        -0.3865
+      6 C          15.1480   30.0692   -4.0247 C.3     1  LIG         0.1141
+      7 O          14.1454   29.4672   -3.2398 O.3     1  LIG        -0.3864
+      8 C          16.5147   29.4035   -3.7657 C.3     1  LIG         0.1342
+      9 O          17.4002   29.7755   -4.7923 O.3     1  LIG        -0.3841
+     10 H          14.5897   32.2729   -5.5105 H       1  LIG         0.2100
+     11 H          14.3254   29.6794   -2.2879 H       1  LIG         0.2100
+     12 H          18.1482   29.1226   -4.7770 H       1  LIG         0.2101
+     13 C          15.9926   33.2931   -2.0512 C.3     1  LIG         0.0730
+     14 O          16.3484   34.4034   -2.8308 O.3     1  LIG        -0.3924
+     15 H          17.3381   34.4714   -2.7931 H       1  LIG         0.2095
+     16 O          16.9360   28.7251   -1.4919 O.3     1  LIG        -0.3090
+     17 C          17.9069   28.7532   -0.4612 C.3     1  LIG         0.2137
+     18 O          17.5769   29.7876    0.4670 O.2     1  LIG        -0.4692
+     19 C          18.5060   30.2895    1.3833 C.2     1  LIG         0.1021
+     20 C          19.8166   30.0694    1.2166 C.2     1  LIG         0.0969
+     21 C          20.8230   30.6384    2.1313 C.2     1  LIG         0.3427
+     22 O          20.4890   31.3458    3.1190 O.2     1  LIG        -0.2448
+     23 O          22.1740   30.4295    1.8566 O.3     1  LIG        -0.4569
+     24 C          22.6128   29.4199    0.9462 C.3     1  LIG         0.1116
+     25 C          21.6231   29.1794   -0.1658 C.2     1  LIG        -0.0422
+     26 C          20.2979   29.3512    0.0105 C.2     1  LIG        -0.0185
+     27 C          19.2938   29.0105   -1.0835 C.3     1  LIG         0.0652
+     28 C          19.7007   27.7890   -1.8825 C.2     1  LIG        -0.0779
+     29 C          19.7325   26.5700   -1.3361 C.2     1  LIG        -0.1019
+     30 H          18.1302   30.0710   -2.5201 H       1  LIG         0.0939
+     31 H          17.2217   32.1069   -3.3336 H       1  LIG         0.0647
+     32 H          14.2534   31.9063   -3.3928 H       1  LIG         0.0647
+     33 H          14.9037   29.9172   -5.0553 H       1  LIG         0.0648
+     34 H          16.3830   28.3417   -3.7549 H       1  LIG         0.0671
+     35 H          14.9431   33.3315   -1.8462 H       1  LIG         0.0584
+     36 H          16.5541   33.3222   -1.1408 H       1  LIG         0.0584
+     37 H          17.9252   27.8169    0.0564 H       1  LIG         0.1066
+     38 H          18.1667   30.8550    2.2260 H       1  LIG         0.1033
+     39 H          23.5442   29.7253    0.5172 H       1  LIG         0.0743
+     40 H          22.7147   28.5073    1.4954 H       1  LIG         0.0743
+     41 H          21.9833   28.8632   -1.1225 H       1  LIG         0.0609
+     42 H          19.2625   29.8484   -1.7482 H       1  LIG         0.0453
+     43 H          19.9697   27.9057   -2.9115 H       1  LIG         0.0574
+     44 H          19.4663   26.4373   -0.3083 H       1  LIG         0.0532
+     45 H          20.0242   25.7266   -1.9264 H       1  LIG         0.0532
 ```
   
-- Fix bond order in the `.mol2` file using a [Perl script](http://www.mdtutorials.com/gmx/complex/Files/sort_mol2_bonds.txt):
+- Now, fix bond order in the `ligand.mol2` file using a [Perl script](http://www.mdtutorials.com/gmx/complex/Files/sort_mol2_bonds.txt):
 
 ```bash
 perl sort_mol2_bonds.pl ligand.mol2 ligand_fix.mol2
 ```
+
+### Generate Ligand Topology
 
 - Generate ligand topology using [CGenFF](https://cgenff.com/) (Create account to use CGenFF):
     - Upload your `ligand_fix.mol2` file → get `ligand_fix.str` and `ligand_fix.cgenff.mol2`.
