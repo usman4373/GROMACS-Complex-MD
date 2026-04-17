@@ -37,7 +37,13 @@ During the run, you will be prompted to select:
 > If writing the topology of a protein fails due to hydrogen atoms mismatch, then use `-ignh` in the above command. It will let GROMACS rebuild hydrogens correctly
 
 ### 1.2 Generate ligand topology
-- Add hydrogens to the ligand using [Avogadro](https://avogadro.cc/) and save as `.mol2`.
+- Add hydrogens to the ligand using [Avogadro](https://avogadro.cc/) (Build > Hydrogens > Add hydrogens) and save as `.mol2` (File > Export > Molecule).
+- After adding hydrogens, fix the `.mol2` file. Open `.mol2` file in a text editor and edit:
+
+```bash
+
+```
+  
 - Fix bond order in the `.mol2` file using a [Perl script](http://www.mdtutorials.com/gmx/complex/Files/sort_mol2_bonds.txt):
 
 ```bash
