@@ -45,13 +45,13 @@ perl sort_mol2_bonds.pl ligand.mol2 ligand_fix.mol2
 ```
 
 - Generate ligand topology using [CGenFF](https://cgenff.com/) (Create account to use CGenFF):
-    - Upload your `ligand_fix.mol2` file → get `ligand.str` and `ligand_fix.mol2`.
+    - Upload your `ligand_fix.mol2` file → get `ligand_fix.str` and `ligand_fix.mol2`.
 
 - Convert CHARMM to GROMACS format:
-- Use `cgenff_charmm2gmx.py` script downloaded from [MacKerell lab website](https://mackerell.umaryland.edu/charmm_ff.shtml#gromacs)
+- Use `cgenff_charmm2gmx_py3_nx2.py` script downloaded from [MacKerell lab website](https://mackerell.umaryland.edu/charmm_ff.shtml#gromacs)
 
 ```bash
-python cgenff_charmm2gmx_py3_nx2.py ligand ligand_fix.mol2 ligand_fix.str charmm36-jul2022.ff
+python cgenff_charmm2gmx_py3_nx2.py ligand ligand_fix.mol2 ligand_fix.str charmm36-feb2026_cgenff-5.0.ff
 ```
 
 This produces a ligand topology file (e.g., `ligand_fix.itp`) and a `.gro` file.
