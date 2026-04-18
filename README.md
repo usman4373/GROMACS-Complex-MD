@@ -204,6 +204,8 @@ GASTEIGER
      43 H          19.9697   27.9057   -2.9115 H       1  LIG         0.0574
      44 H          19.4663   26.4373   -0.3083 H       1  LIG         0.0532
      45 H          20.0242   25.7266   -1.9264 H       1  LIG         0.0532
+
+The rest of the file will remain identical
 ```
   
 - Now, fix bond order in the `ligand.mol2` file using a [Perl script](http://www.mdtutorials.com/gmx/complex/Files/sort_mol2_bonds.txt):
@@ -215,7 +217,21 @@ perl sort_mol2_bonds.pl ligand.mol2 ligand_fix.mol2
 ### Generate Ligand Topology
 
 - Generate ligand topology using [CGenFF](https://cgenff.com/) (Create account to use CGenFF):
-    - Upload your `ligand_fix.mol2` file → get `ligand_fix.str` and `ligand_fix.cgenff.mol2`.
+    - Upload your `ligand_fix.mol2` file → select parameters → Run Cgenff engine → Convert results to GROMACS format and download
+    - Output will contain: `ligand_fix_gmx.pdb`, `ligand_fix_gmx.top`, and charmm36.ff directory
+> CGenFF gives a score to each parameter to show how reliable it is.
+> Scores below 10 are usually safe to use directly.
+> Scores between 10 and 50 mean you should check or validate them.
+> Scores above 50 are unreliable and often need to be re-parameterized manually.
+> These scores are very important because they tell you how much you can trust the generated parameters.
+
+
+
+
+
+
+
+
 
 - Convert CHARMM to GROMACS format:
 - Use `cgenff_charmm2gmx_py3_nx2.py` script downloaded from [MacKerell lab website](https://mackerell.umaryland.edu/charmm_ff.shtml#gromacs)
