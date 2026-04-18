@@ -220,9 +220,9 @@ perl sort_mol2_bonds.pl ligand.mol2 ligand_fix.mol2
     - Upload your `ligand_fix.mol2` file → select parameters → Run Cgenff engine → Convert results to GROMACS format and download
     - Output will contain: `ligand_fix_gmx.pdb`, `ligand_fix_gmx.top`, and charmm36.ff directory
 > CGenFF gives a score to each parameter to show how reliable it is.
-> Scores below 10 are usually safe to use directly.
-> Scores between 10 and 50 mean you should check or validate them.
-> Scores above 50 are unreliable and often need to be re-parameterized manually.
+> - Scores below 10 are usually safe to use directly.
+> - Scores between 10 and 50 mean you should check or validate them.
+> - Scores above 50 are unreliable and often need to be re-parameterized manually.
 > These scores are very important because they tell you how much you can trust the generated parameters.
 
 
