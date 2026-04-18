@@ -226,6 +226,23 @@ perl sort_mol2_bonds.pl ligand.mol2 ligand_fix.mol2
 >
 > These scores are very important because they tell you how much you can trust the generated parameters.
 
+- The files from the CGenFF server need a few changes before use
+- The topology file `ligand_fix_gmx.top` is made for full system use in GROMACS
+- It needs to be modified further
+- First, make a copy of this file and rename it to ligand_gmx.itp:
+
+```bash
+cp ligand_fix_gmx.top ligand_gmx.itp
+```
+
+- Now, make further changes to the `ligand_gmx.itp` file:
+    - Remove the #include "charmm36.ff/forcefield.itp" line
+    - Replace the #include "charmm36.ff/jz4_ffbonded.itp" line with the actual content of that file
+    - Remove all lines from "; Include water topology" to the end of the file
+    - Rename the [moleculetype] from Other to LIG
+    - Change #include "posre.itp" to #include "posre_ligand.itp"
+
+
 
 
 
