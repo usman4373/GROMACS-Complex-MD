@@ -223,6 +223,7 @@ perl sort_mol2_bonds.pl ligand.mol2 ligand_fix.mol2
 > - Scores below 10 are usually safe to use directly.
 > - Scores between 10 and 50 mean you should check or validate them.
 > - Scores above 50 are unreliable and often need to be re-parameterized manually.
+
 > These scores are very important because they tell you how much you can trust the generated parameters.
 
 
