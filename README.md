@@ -237,6 +237,26 @@ cp ligand_fix_gmx.top ligand_gmx.itp
 
 - Now, make further changes to the `ligand_gmx.itp` file (open in text editor):
 
+```diff
+- #include "./charmm36.ff/forcefield.itp"
+
+- #include "./charmm36.ff/lig_ffbonded.itp"
++ (paste contents of lig_ffbonded.itp here)
+
+- ; Include water topology
+- (delete everything below this)
+
+- Other
++ LIG
+
+- #include "posre.itp"
++ #include "posre_ligand.itp"
+```
+
+
+
+
+
 ```bash
 #include "./charmm36.ff/forcefield.itp" (Remove this line)
 
