@@ -237,15 +237,13 @@ cp ligand_fix_gmx.top ligand_gmx.itp
 
 - Now, make further changes to the `ligand_gmx.itp` file (open in text editor):
 
-1. Remove the following line:
 ```cpp
-#include "./charmm36.ff/forcefield.itp"
-```
-2. Replace ```#include "./charmm36.ff/lig_ffbonded.itp"``` with the actual contents of the `charmm36.ff/lig_ffbonded.itp` file
+1. Remove `#include "./charmm36.ff/forcefield.itp"` line
+2. Replace `#include "./charmm36.ff/lig_ffbonded.itp"` with the actual contents of the `charmm36.ff/lig_ffbonded.itp` file
 3. Delete everything from `; Include water topology` to the end of the file
 4. Rename the `[moleculetype]` from `Other` to `LIG`
 5. Replace `#include "posre.itp"` to `#include "posre_ligand.itp"`
-
+```
 
 
 
