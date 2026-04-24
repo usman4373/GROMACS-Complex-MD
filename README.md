@@ -324,6 +324,19 @@ cp protein_processed.gro complex.gro
 ```
 > <p style="justify;"> The "Include ligand parameters" statement must be positioned carefully. It should be placed above any [ moleculetype ] sections to ensure all parameters are available before any molecules are defined. At the same time, it needs to come after the main force field "Include forcefield parameters", since atom types must already be declared before any bonded parameters that rely on them are introduced </p>
 
+- The final change is required in the [ molecules ] section
+- Since a new molecule has been added to `complex.gro`, it must also be included in this directive:
+
+```cpp
+[ molecules ]
+; Compound        #mols
+Protein_chain_A     1
+LIG                 1
+```
+
+The topology and coordinate files now match in terms of the system composition and system is ready for solvation
+
+## Solvation
 
 
 
