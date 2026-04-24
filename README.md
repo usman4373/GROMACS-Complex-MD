@@ -417,7 +417,28 @@ Selected 2: 'lig'
 ```
 > Select ligand group (2)
 
-Now edit `topol.top` to include `#include "posre_lig.itp"` after the ligand topology include, and before [ molecules ].
+- Now edit `topol.top` to include `#include "posre_lig.itp"` before [ molecules ]:
+
+```cpp
+; Include topology for ions
+#include "./charmm36-feb2026_cgenff-5.0.ff/ions.itp"
+
+; Ligand position restraints     | Add   |
+#ifdef POSRES_LIG                | these |
+#include "posre_ligand.itp"      | lines |
+#endif                           | here  |
+
+[ system ]
+; Name
+Protein in water
+
+[ molecules ]
+; Compound        #mols
+Protein_chain_A     1
+LIG                 1
+SOL         20461
+NA               12
+```
 
 ### 5.2 Prepare a combined index for temperature coupling
 
