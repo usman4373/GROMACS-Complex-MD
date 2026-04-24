@@ -27,7 +27,7 @@ This guide provides a step‑by‑step protocol for setting up and running a mol
 - Now, generate the topology of the protein:
 
 ```bash
-gmx pdb2gmx -f protein.pdb -o protein_processed.gro -p protein_topol.top
+gmx pdb2gmx -f protein.pdb -o protein_processed.gro -p topol.top
 ```
 
 During the run, you will be prompted to select:
@@ -312,7 +312,7 @@ cp protein_processed.gro complex.gro
 - Because 45 atoms were added to the `complex.gro` file, update the second line of `complex.gro` by increasing the atom count by 45 (In general, add the number of atoms based on how many atoms are in your ligand)
 
 ## 1.5 Build the topology of protein-ligand complex
-- The ligand introduces new dihedral parameters, so the ligand topology must be included at the top of `protein_topol.top`
+- The ligand introduces new dihedral parameters, so the ligand topology must be included at the top of `topol.top`
 - Add the following after `#include "./charmm36-feb2026_cgenff-5.0.ff/forcefield.itp"` line, as shown below:
 
 ```cpp
@@ -334,10 +334,10 @@ Protein_chain_A     1
 LIG                 1
 ```
 
-The topology and coordinate files now match in terms of the system composition and system is ready for solvation
+The topology and coordinate files now match in terms of the system composition, and the system is ready for solvation
 
 ## Step 2: Solvation
-### 2.1 Define the simulation box (dodecahedron recommended)
+### 2.1 Define the simulation box
 
 ```bash
 gmx editconf -f complex.gro -o newbox.gro -bt dodecahedron -c -d 1.0
@@ -352,13 +352,25 @@ gmx editconf -f complex.gro -o newbox.gro -bt dodecahedron -c -d 1.0
 ### 2.2 Fill the box with water
 
 ```bash
-gmx solvate -cp newbox.gro -cs spc216.gro -p protein_topol.top -o solv.gro
+gmx solvate -cp newbox.gro -cs spc216.gro -p topol.top -o solv.gro
 ```
 
 > `-cp` = solute configuration (complex in box) `-cs` = solvent configuration (SPC216 water model)
 
 ## Step 3: Add ions to neutralize the system
+- First, assemble a `.tpr` file using [ions.mdp](http://www.mdtutorials.com/gmx/complex/Files/ions.mdp):
 
+```bash
+gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr
+```
+
+Then replace solvent molecules with ions:
+
+```bash
+gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral
+```
+
+> When prompted, select the `SOL` group (water) – this ensures ions are placed only in the solvent region
 
 
 
@@ -423,30 +435,8 @@ Ligand      1
 
 > Keep a backup of your topology file.
 
-## Step 2: Solvation
-
-### 2.1 Define the simulation box (dodecahedron recommended)
-
-```bash
-gmx editconf -f complex.gro -o newbox.gro -bt dodecahedron -c -d 1.0
-```
-
-| Option     | Meaning                                                   |
-|------------|-----------------------------------------------------------|
-| `-bt`      | Rhombic dodecahedron box (better volume/surface ratio)    |
-| `-c`       | Center the complex in the box                             |
-| `-d 1.0`   | Minimum distance (nm) from solute to box edge             |
-
-### 2.2 Fill the box with water
-
-```bash
-gmx solvate -cp newbox.gro -cs spc216.gro -p topol.top -o solv.gro
-```
-
-> `-cp` = solute configuration (complex in box) `-cs` = solvent configuration (SPC216 water model)
-
 ## Step 3: Add ions to neutralize the system
-- First, assemble a `.tpr` file using `ions.mdp`:
+- First, assemble a `.tpr` file using [ions.mdp]():
 
 ```bash
 gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr
