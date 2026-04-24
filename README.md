@@ -214,7 +214,7 @@ The rest of the file will remain identical
 perl sort_mol2_bonds.pl ligand.mol2 ligand_fix.mol2
 ```
 
-### Generate Ligand Topology
+## Generate Ligand Topology
 
 - Generate ligand topology using [CGenFF](https://cgenff.com/) (Create account to use CGenFF):
     - Upload your `ligand_fix.mol2` file → select parameters → Run Cgenff engine → Convert results to GROMACS format and download
@@ -312,8 +312,16 @@ cp protein_processed.gro complex.gro
 - Because 45 atoms were added to the `complex.gro` file, update the second line of `complex.gro` by increasing the atom count by 45 (In general, add the number of atoms based on how many atoms are in your ligand)
 
 ## Build the Topology
+- The ligand introduces new dihedral parameters, so the ligand topology must be included at the top of `protein_topol.top`
+- Add the following after `#include "./charmm36-feb2026_cgenff-5.0.ff/forcefield.itp"` line, as shown below:
 
+```cpp
+; Include forcefield parameters
+#include "./charmm36-feb2026_cgenff-5.0.ff/forcefield.itp"
 
+; Include ligand parameters
+#include "ligand_gmx.itp"
+```
 
 
 
