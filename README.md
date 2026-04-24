@@ -375,9 +375,11 @@ gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutra
 > When prompted, select the `SOL` group (water) – this ensures ions are placed only in the solvent region
 
 ## Step 4: Energy minimization
-
+- After assembling the system, generate the binary input file using `grompp` with the provided input parameter file ([em.mdp](http://www.mdtutorials.com/gmx/complex/Files/em.mdp))
 ```bash
 gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr
+```
+```bash
 gmx mdrun -v -s em.tpr -deffnm em -nb gpu
 ```
 
