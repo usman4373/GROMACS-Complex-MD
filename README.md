@@ -257,9 +257,59 @@ gmx editconf -f ligand_fix_gmx.pdb -o ligand.gro
 cp protein_processed.gro complex.gro
 ```
 
-- Take the coordinate part from `ligand.gro` and insert it into `complex.gro`
-- Place it right after the last protein atom line and before the box vector lines
+- Open the `ligand.gro` file in a text editor, copy its coordinate part, and paste it into the `complex.gro` file
+- Place it right after the last protein atom line and before the box vector lines:
 
+```cpp
+374PHE    OT2 5811   1.473   1.005  -1.391     # Last protein atom line
+    1lig     C1    1   1.710   2.982  -0.238
+    1lig     O2    2   1.645   3.095  -0.182
+    1lig     C3    3   1.631   3.198  -0.278
+    1lig     C4    4   1.520   3.161  -0.379
+    1lig     O5    5   1.544   3.227  -0.501
+    1lig     C6    6   1.515   3.007  -0.403
+    1lig     O7    7   1.414   2.947  -0.324
+    1lig     C8    8   1.651   2.940  -0.377
+    1lig     O9    9   1.740   2.978  -0.479
+    1lig    H10   10   1.459   3.227  -0.551
+    1lig    H11   11   1.433   2.968  -0.229
+    1lig    H12   12   1.815   2.912  -0.478
+    1lig    C13   13   1.599   3.329  -0.205
+    1lig    O14   14   1.635   3.440  -0.283
+    1lig    H15   15   1.734   3.447  -0.279
+    1lig    O16   16   1.694   2.872  -0.149
+    1lig    C17   17   1.791   2.875  -0.046
+    1lig    O18   18   1.758   2.979   0.047
+    1lig    C19   19   1.851   3.029   0.138
+    1lig    C20   20   1.982   3.007   0.122
+    1lig    C21   21   2.082   3.064   0.213
+    1lig    O22   22   2.049   3.135   0.312
+    1lig    O23   23   2.217   3.043   0.186
+    1lig    C24   24   2.261   2.942   0.095
+    1lig    C25   25   2.162   2.918  -0.017
+    1lig    C26   26   2.030   2.935   0.001
+    1lig    C27   27   1.929   2.901  -0.108
+    1lig    C28   28   1.970   2.779  -0.188
+    1lig    C29   29   1.973   2.657  -0.134
+    1lig    H30   30   1.813   3.007  -0.252
+    1lig    H31   31   1.722   3.211  -0.333
+    1lig    H32   32   1.425   3.191  -0.339
+    1lig    H33   33   1.490   2.992  -0.506
+    1lig    H34   34   1.638   2.834  -0.375
+    1lig    H35   35   1.494   3.333  -0.185
+    1lig    H36   36   1.655   3.332  -0.114
+    1lig    H37   37   1.793   2.782   0.006
+    1lig    H38   38   1.817   3.086   0.223
+    1lig    H39   39   2.354   2.973   0.052
+    1lig    H40   40   2.272   2.851   0.149
+    1lig    H41   41   2.198   2.886  -0.112
+    1lig    H42   42   1.926   2.985  -0.175
+    1lig    H43   43   1.997   2.791  -0.291
+    1lig    H44   44   1.947   2.644  -0.031
+    1lig    H45   45   2.002   2.573  -0.193
+   5.77620   6.44341   6.98742   # box vector line
+```
+- Because 45 atoms were added to the `complex.gro` file, update the second line of `complex.gro` by increasing the atom count by 45 (In general, add the number of atoms based on how many atoms are in your ligand)
 
 
 
