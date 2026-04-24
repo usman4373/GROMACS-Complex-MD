@@ -357,8 +357,7 @@ gmx solvate -cp newbox.gro -cs spc216.gro -p topol.top -o solv.gro
 
 `-cp` = solute configuration (complex in box) `-cs` = solvent configuration (SPC216 water model)
 
-> “Back Off!” message while running the above command is normal and indicates that a backup of the original file (e.g., #topol.top.1#) has been created.
-The original file is then updated with new changes, while the previous version remains safely stored as a backup.
+> `Back Off! I just backed up topol.top to ./#topol.top.1#` message while running the above command is normal and indicates that a backup of the original file (e.g., #topol.top.1#) has been created. The original file is then updated with new changes, while the previous version remains safely stored as a backup.
 
 ## Step 3: Add ions to neutralize the system
 - First, assemble a `.tpr` file using [ions.mdp](http://www.mdtutorials.com/gmx/complex/Files/ions.mdp):
