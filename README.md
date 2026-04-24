@@ -337,6 +337,27 @@ LIG                 1
 The topology and coordinate files now match in terms of the system composition and system is ready for solvation
 
 ## Step 2: Solvation
+### 2.1 Define the simulation box (dodecahedron recommended)
+
+```bash
+gmx editconf -f complex.gro -o newbox.gro -bt dodecahedron -c -d 1.0
+```
+
+| Option     | Meaning                                                   |
+|------------|-----------------------------------------------------------|
+| `-bt`      | Rhombic dodecahedron box (better volume/surface ratio)    |
+| `-c`       | Center the complex in the box                             |
+| `-d 1.0`   | Minimum distance (nm) from solute to box edge             |
+
+### 2.2 Fill the box with water
+
+```bash
+gmx solvate -cp newbox.gro -cs spc216.gro -p protein_topol.top -o solv.gro
+```
+
+> `-cp` = solute configuration (complex in box) `-cs` = solvent configuration (SPC216 water model)
+
+## Step 3: Add ions to neutralize the system
 
 
 
