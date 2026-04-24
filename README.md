@@ -261,7 +261,7 @@ cp protein_processed.gro complex.gro
 - Place it right after the last protein atom line and before the box vector lines:
 
 ```cpp
-374PHE    OT2 5811   1.473   1.005  -1.391     # Last protein atom line
+  374PHE    OT2 5811   1.473   1.005  -1.391     # Last protein atom line
     1lig     C1    1   1.710   2.982  -0.238
     1lig     O2    2   1.645   3.095  -0.182
     1lig     C3    3   1.631   3.198  -0.278
@@ -310,6 +310,23 @@ cp protein_processed.gro complex.gro
    5.77620   6.44341   6.98742   # box vector line
 ```
 - Because 45 atoms were added to the `complex.gro` file, update the second line of `complex.gro` by increasing the atom count by 45 (In general, add the number of atoms based on how many atoms are in your ligand)
+
+## Build the Topology
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
