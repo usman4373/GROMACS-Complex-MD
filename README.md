@@ -36,7 +36,7 @@ During the run, you will be prompted to select:
 
 > If writing the topology of a protein fails due to a mismatch of hydrogen atoms, then use `-ignh` in the above command. It will let GROMACS rebuild hydrogens correctly
 
-### 1.2 Generate ligand topology
+### 1.2 Process the ligand
 - Add hydrogens to the ligand using [Avogadro](https://avogadro.cc/) (Build > Hydrogens > Add hydrogens) and save as `ligand.mol2` (File > Export > Molecule).
 - After adding hydrogens, open `ligand.mol2` file in a text editor and make 2 changes.
 - File will look like this:
@@ -142,10 +142,10 @@ GASTEIGER
     46    29    44    1
     47    29    45    1
 ```
-### First Change
+### First change
 - In the "@<TRIPOS>MOLECULE" heading, replace "*****" with "LIG" or "UNL" etc
 
-### Second Change
+### Second change
 - Fix the residue names and numbers such that they are all the same
 > If the `ligand.mol2` file contains more than 1 molecule, then make changes accordingly
 
@@ -214,7 +214,7 @@ The rest of the file will remain identical
 perl sort_mol2_bonds.pl ligand.mol2 ligand_fix.mol2
 ```
 
-## Generate Ligand Topology
+## 1.3 Generate ligand topology
 
 - Generate ligand topology using [CGenFF](https://cgenff.com/) (Create account to use CGenFF):
     - Upload your `ligand_fix.mol2` file → select parameters → Run Cgenff engine → Convert results to GROMACS format and download
@@ -242,7 +242,7 @@ cp ligand_fix_gmx.top ligand_gmx.itp
 4. Rename the `[moleculetype]` from `Other` to `LIG`
 5. Replace `#include "posre.itp"` to `#include "posre_ligand.itp"`
 
-## Build the Complex
+## 1.4 Build the protein-ligand complex
 - The `protein_processed.gro` file, which was generated during the protein processing step, will be used to create the complex
 - It contains the processed, force field-compliant structure of the protein
 - For ligand, `ligand_fix_gmx.pdb` file will be used, which was obtained from the CGenFF server that has all of the necessary H atoms and matches the atom names in the LIG topology
@@ -311,7 +311,7 @@ cp protein_processed.gro complex.gro
 ```
 - Because 45 atoms were added to the `complex.gro` file, update the second line of `complex.gro` by increasing the atom count by 45 (In general, add the number of atoms based on how many atoms are in your ligand)
 
-## Build the Topology
+## 1.5 Build the topology of protein-ligand complex
 - The ligand introduces new dihedral parameters, so the ligand topology must be included at the top of `protein_topol.top`
 - Add the following after `#include "./charmm36-feb2026_cgenff-5.0.ff/forcefield.itp"` line, as shown below:
 
@@ -336,7 +336,7 @@ LIG                 1
 
 The topology and coordinate files now match in terms of the system composition and system is ready for solvation
 
-## Solvation
+## Step 2: Solvation
 
 
 
