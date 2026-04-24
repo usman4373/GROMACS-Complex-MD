@@ -404,6 +404,18 @@ Then generate restraints for the ligand:
 ```bash
 gmx genrestr -f ligand.gro -n index_lig.ndx -o posre_lig.itp -fc 1000 1000 1000
 ```
+- The above command will prompt to select a group:
+```cpp
+Reading structure file
+Select group to position restrain
+Group     0 (         System) has    45 elements
+Group     1 (          Other) has    45 elements
+Group     2 (            lig) has    45 elements
+Group     3 (   System_&_!H*) has    25 elements
+Select a group: 2
+Selected 2: 'lig'
+```
+> Select ligand group (2)
 
 Now edit `topol.top` to include `#include "posre_lig.itp"` after the ligand topology include, and before [ molecules ].
 
