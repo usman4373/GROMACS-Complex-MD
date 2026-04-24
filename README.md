@@ -251,11 +251,14 @@ cp ligand_fix_gmx.top ligand_gmx.itp
 ```bash
 gmx editconf -f ligand_fix_gmx.pdb -o ligand.gro
 ```
+- Now, make a copy of the `protein_processed.gro` file:
 
+```bash
+cp protein_processed.gro complex.gro
+```
 
-
-
-
+- Take the coordinate part from `ligand.gro` and insert it into `complex.gro`
+- Place it right after the last protein atom line and before the box vector lines
 
 
 
