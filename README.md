@@ -397,6 +397,7 @@ gmx make_ndx -f ligand.gro -o index_lig.ndx
 > 0 & ! a H*
 > q
 ```
+> This creates a new group containing all non-hydrogen atoms of the entire system
 
 Then generate restraints for the ligand:
 
