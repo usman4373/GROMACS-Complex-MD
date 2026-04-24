@@ -385,12 +385,17 @@ gmx mdrun -v -s em.tpr -deffnm em -nb gpu
 
 ## Step 5: Equilibration (NVT and NPT)
 
-For a protein–ligand complex, we apply position restraints to the ligand (and optionally to the protein backbone) and use separate temperature coupling groups.
+For a protein–ligand complex, position restraints are applied to the ligand (and optionally to the protein backbone) and use separate temperature coupling groups.
 
 ### 5.1 Create index file and ligand restraints
 
 ```bash
 gmx make_ndx -f ligand.gro -o index_lig.ndx
+```
+- You will be prompted while running the above command. Select the following options:
+```bash
+> 0 & ! a H*
+> q
 ```
 
 Then generate restraints for the ligand:
