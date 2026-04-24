@@ -319,8 +319,8 @@ cp protein_processed.gro complex.gro
 ; Include forcefield parameters
 #include "./charmm36-feb2026_cgenff-5.0.ff/forcefield.itp"
 
-; Include ligand parameters
-#include "ligand_gmx.itp"
+; Include ligand parameters    | Add these |
+#include "ligand_gmx.itp"      | lines     |
 ```
 
 
