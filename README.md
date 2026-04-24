@@ -322,7 +322,7 @@ cp protein_processed.gro complex.gro
 ; Include ligand parameters    | Add these |
 #include "ligand_gmx.itp"      | lines     |
 ```
-> The `#include "ligand_gmx.itp"` statement must be positioned carefully. It should be placed above any `[ moleculetype ]` sections to ensure all parameters are available before any molecules are defined. At the same time, it needs to come after the main force field `#include "./charmm36-feb2026_cgenff-5.0.ff/forcefield.itp"`, since atom types must already be declared before any bonded parameters that rely on them are introduced
+> <p style="text-align: justify;"> The `#include "ligand_gmx.itp"` statement must be positioned carefully. It should be placed above any `[ moleculetype ]` sections to ensure all parameters are available before any molecules are defined. At the same time, it needs to come after the main force field `#include "./charmm36-feb2026_cgenff-5.0.ff/forcefield.itp"`, since atom types must already be declared before any bonded parameters that rely on them are introduced </p>
 
 
 
