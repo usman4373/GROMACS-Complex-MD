@@ -560,49 +560,55 @@ All analyses below use the corrected trajectory (`md_10ns_center.xtc`) and the r
 
 ### 7.2.1 RMSD – Root Mean Square Deviation
 
-Measures how much the protein structure deviates from a reference (usually the starting structure) over time.
+- Measures how much the protein, ligand, or whole complex structure deviates from a reference (usually the starting structure) over time.
+- Three different RMSD can be calculated:
+  - Protein-ligand complex RMSD
+  - Protein RMSD with respect to the protein's initial structure
+  - Ligand RMSD with respect to the protein's initial structure (This shows how the ligand moves relative to the protein binding site)
+> If the ligand is fitted on itself, its motion is artificially removed, and the RMSD calculation becomes meaningless
 
 ```bash
-gmx rms -s md_10ns.tpr -f md_10ns_center.xtc -o RMSD.xvg -tu ns
+gmx rms -s md_10ns.tpr -f md_10ns_center.xtc -o rmsd.xvg -tu ns
 ```
-At the prompts:
-- For least squares fit – choose
-- For RMSD calculation – choose
 
-**Output:** `RMSD.xvg` (RMSD in `nm` vs. time in `ns`)
+Select the appropriate option in the prompts:
+- For least squares fit – choose `Protein` or `Backbone` group as a reference for protein, ligand, or whole complex RMSD
+- For RMSD calculation – choose `Protein_LIG` group for whole complex RMSD, `Protein` for only protein RMSD, and `lig` for only ligand RMSD
+
+**Output:** `rmsd.xvg` (RMSD in `nm` vs. time in `ns`)
 
 ### 7.2.2 Radius of gyration (rGyr)
-Indicates the compactness of the protein.
+Indicates the compactness of the structure
 
 ```bash
 gmx gyrate -s md_10ns.tpr -f md_10ns_center.xtc -o gyrate.xvg
 ```
 
-At prompt:
-- Select group – choose
+Select an appropriate option in the prompt:
+- Select group – choose `Protein` or `Backbone` to get only protein's rGyr, `lig` to get only ligand's eGyr, and `Protein_LIG` to get rGyr of the whole complex
 
 **Output:** `gyrate.xvg` (radius of gyration in `nm`)
 
 ### 7.2.3 RMSF – Root Mean Square Fluctuation
-Per‑residue flexibility (requires an index file with residue numbers).
+Per‑residue flexibility (requires an index file with residue numbers)
 
 ```bash
 gmx rmsf -s md_10ns.tpr -f md_10ns_center.xtc -o rmsf.xvg -res
 ```
 
-At prompt:
+Select the appropriate options in the prompts:
 - Select group for fitting – usually 4 (Backbone)
-- Select group for RMSF – 4 (Backbone) or 1 (Protein) – use `-res` to get per‑residue output.
+- Select group for RMSF – 4 (Backbone) or 1 (Protein) – use `-res` to get per‑residue output
 
 **Output:** `rmsf.xvg` (RMSF in `nm` per residue)
 
 ### 7.2.4 SASA – Solvent Accessible Surface Area
-Measures the surface area exposed to solvent.
+Measures the surface area exposed to solvent
 
 ```bash
 gmx sasa -s md_10ns.tpr -f md_10ns_center.xtc -o sasa.xvg -or resarea.xvg
 ```
-At prompt:
+Select the appropriate options in the prompts:
 - Select group – 
 
 **Outputs:**
