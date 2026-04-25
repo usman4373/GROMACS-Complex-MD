@@ -424,7 +424,7 @@ Selected 2: 'lig'
 
 ; Ligand position restraints     | Add   |
 #ifdef POSRES_LIG                | these |
-#include "posre_lig.itp"      | lines |
+#include "posre_lig.itp"         | lines |
 #endif                           | here  |
 
 [ system ]
