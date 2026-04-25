@@ -5,9 +5,9 @@ This guide provides a step‑by‑step protocol for setting up and running a mol
 ## Prerequisites
 
 - [GROMACS](https://www.gromacs.org/) (2020 or later) installed with GPU support (optional but recommended)
-- Protein structure file (`protein.pdb`) and ligand structure file (`ligand.pdb` or `.mol2`)
-- Parameter files (`ions.mdp`, `em.mdp`, `nvt.mdp`, `npt.mdp`, `md.mdp`) – obtain from [standard GROMACS tutorials](http://www.mdtutorials.com/gmx/)
-- For ligand topology: [CGenFF](https://cgenff.com/) (or other force field tools) and the `cgenff_charmm2gmx.py` script
+- Protein structure file (`protein.pdb`) and ligand structure file (`ligand.pdb`)
+- Parameter files (`ions.mdp`, `em.mdp`, `nvt.mdp`, `npt.mdp`, `md.mdp`) – present in this repo or obtain from [standard GROMACS tutorials](http://www.mdtutorials.com/gmx/)
+- For ligand topology: [CGenFF](https://cgenff.com/) (or other force field tools)
 
 > **Note:** The ligand topology generation is force‑field specific. This guide uses **CHARMM36** (via CGenFF) as an example. Adjust if using another force field.
 
@@ -60,7 +60,6 @@ This guide provides a step‑by‑step protocol for setting up and running a mol
 
 ### Download CHARMM36 Force field (Optional)
 - Download CHARMM36 force field from [MacKerell lab website](https://mackerell.umaryland.edu/charmm_ff.shtml#gromacs) (Extract the tarball in the working directrory)
-- Also download `cgenff_charmm2gmx_py3_nx2.py` conversion script from the same website
 - Now, generate the topology of the protein:
 
 ```bash
