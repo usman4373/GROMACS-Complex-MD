@@ -28,6 +28,12 @@ This guide provides a step‑by‑step protocol for setting up and running a mol
 
 - [Step 3: Add ions to neutralize the system](#step-3-add-ions-to-neutralize-the-system)
 
+- [Step 4: Energy minimization](#step-4-energy-minimization)
+
+- [Step 5: Equilibration (NVT and NPT)](#step-5-equilibration-nvt-and-npt)
+  - [5.1 Create index file and ligand restraints](#51-create-index-file-and-ligand-restraints)
+  - [5.2 Prepare a combined index for temperature coupling](#52-prepare-a-combined-index-for-temperature-coupling)
+
 
 
 
