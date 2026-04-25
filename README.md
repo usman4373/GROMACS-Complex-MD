@@ -39,7 +39,7 @@ This guide provides a step‑by‑step protocol for setting up and running a mol
 - [Step 6: Production MD simulation](#step-6-production-md-simulation)
 - [Resume crashed simulation](#resume-crashed-simulation)
 
-- [Step 7: Post‑processing and analysis](#step-7-post‑processing-and-analysis)
+- [Step 7: Post‑processing and analysis](#step-7-postprocessing-and-analysis)
   - [7.1 Remove periodic boundary effects](#71-remove-periodic-boundary-effects)
   - [7.2 Common structural analyses](#72-common-structural-analyses)
 
