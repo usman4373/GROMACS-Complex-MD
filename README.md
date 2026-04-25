@@ -456,6 +456,8 @@ Inside the interactive prompt:
 - Run the NVT equilibration step using the [nvt.mdp](http://www.mdtutorials.com/gmx/complex/Files/nvt.mdp) file
 ```bash
 gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -n index.ndx -o nvt.tpr
+```
+```bash
 gmx mdrun -v -s nvt.tpr -deffnm nvt -nb gpu -pme gpu -bonded gpu
 ```
 > The `-r` flag uses the minimized coordinates as a reference for restraints.
@@ -464,18 +466,22 @@ gmx mdrun -v -s nvt.tpr -deffnm nvt -nb gpu -pme gpu -bonded gpu
 - Run the NPT equilibration step using the [npt.mdp](http://www.mdtutorials.com/gmx/complex/Files/npt.mdp) file
 ```bash
 gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt.tpr
+```
+```bash
 gmx mdrun -v -s npt.tpr -deffnm npt -nb gpu -pme gpu -bonded gpu
 ```
 
 ## Step 6: Production MD simulation
-
+- Run the NPT equilibration step using the [md.mdp](http://www.mdtutorials.com/gmx/complex/Files/md.mdp) file
 ```bash
 gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o md_10ns.tpr
+```
+```bash
 gmx mdrun -v -s md_10ns.tpr -deffnm md_10ns -nb gpu -pme gpu -bonded gpu
 ```
 
-- To run `50 ns`, modify nsteps in `md.mdp` accordingly.
-- Use `-deffnm` to set the base name of all output files (e.g., `md_50ns.gro`, `md_50ns.xtc`).
+> To run `50 ns`, modify nsteps in `md.mdp` accordingly
+> Use `-deffnm` to set the base name of all output files (e.g., `md_50ns.gro`, `md_50ns.xtc`)
 
 
 
