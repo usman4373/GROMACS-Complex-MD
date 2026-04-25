@@ -480,9 +480,15 @@ gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o md_10ns.
 gmx mdrun -v -s md_10ns.tpr -deffnm md_10ns -nb gpu -pme gpu -bonded gpu -update gpu -ntmpi 1 -ntomp 8 -pin on -pinstride 1
 ```
 
-> Use `-deffnm` to set the base name of all output files (e.g., `md_50ns.gro`, `md_50ns.xtc`)
->
-> To run `50 ns` or a different simulation time, modify nsteps in `md.mdp` accordingly
+| Argument     | Description                                     | Meaning                                  |
+|--------------|-------------------------------------------------|------------------------------------------|
+| `-ntmpi`     | Number of separate processes (workers)          | `-ntmpi 1` → one main process            |
+| `-ntomp`     | Number of CPU threads per process               | `-ntomp 8` → uses 8 CPU cores            |
+| `-pin`       | Binds threads to specific CPU cores             | `-pin on` → improves performance         |
+| `-pinstride` | Controls how threads are assigned to CPU cores  | `-pinstride 1` → sequential core usage   |
+
+
+> To run `50 ns` or a different simulation time, modify nsteps in `md.mdp`
 >
 > 10,000 ps = 10 ns
 >
