@@ -388,14 +388,13 @@ gmx mdrun -v -s em.tpr -deffnm em -nb gpu
 For a protein–ligand complex, position restraints are applied to the ligand (and optionally to the protein backbone) and use separate temperature coupling groups.
 
 ### 5.1 Create index file and ligand restraints
-
 ```bash
 gmx make_ndx -f ligand.gro -o index_lig.ndx
 ```
-- You will be prompted while running the above command. Select the following options:
+- You will be prompted while running the above command. Type the following options:
 ```bash
-> 0 & ! a H*
-> q
+> 0 & ! a H*  # Type these and press enter
+> q           # Then type this and press enter
 ```
 > This creates a new group containing all non-hydrogen atoms of the entire system
 
@@ -454,7 +453,7 @@ Inside the interactive prompt:
 - Note: The group numbers may differ. Use gmx make_ndx without arguments to list groups.
 
 ### 5.3 NVT equilibration (constant temperature)
-
+- Run the NVT equilibration step using the [nvt.mdp](http://www.mdtutorials.com/gmx/complex/Files/nvt.mdp) file
 ```bash
 gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -n index.ndx -o nvt.tpr
 gmx mdrun -v -s nvt.tpr -deffnm nvt -nb gpu -pme gpu -bonded gpu
@@ -462,7 +461,7 @@ gmx mdrun -v -s nvt.tpr -deffnm nvt -nb gpu -pme gpu -bonded gpu
 > The `-r` flag uses the minimized coordinates as a reference for restraints.
 
 ### 5.4 NPT equilibration (constant pressure)
-
+- Run the NPT equilibration step using the [npt.mdp](http://www.mdtutorials.com/gmx/complex/Files/npt.mdp) file
 ```bash
 gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt.tpr
 gmx mdrun -v -s npt.tpr -deffnm npt -nb gpu -pme gpu -bonded gpu
