@@ -503,24 +503,24 @@ gmx mdrun -v -s md_10ns.tpr -deffnm md_10ns -cpi md_10ns.cpt -nb gpu -pme gpu -b
 ### 7.1 Remove periodic boundary effects
 
 ```bash
-gmx trjconv -s md_10ns.tpr -f md_10ns.xtc -o md_50ns_center.xtc -center -pbc mol -ur compact
+gmx trjconv -s md_10ns.tpr -f md_10ns.xtc -o md_10ns_center.xtc -center -pbc mol -ur compact
 ```
 
 During execution, you will be prompted twice:
 
 - Select group for centering – choose the protein (typically group 1).
 - Select group for output – choose the system (group 0).
-- Now use `md_50ns_center.xtc` for all downstream analysis.
+- Now use `md_10ns_center.xtc` for all downstream analysis.
  
 ### 7.2 Common structural analyses
-All analyses below use the corrected trajectory (`md_50ns_center.xtc`) and the run input file (`md_10ns.tpr`).
+All analyses below use the corrected trajectory (`md_10ns_center.xtc`) and the run input file (`md_10ns.tpr`).
 
 ### 7.2.1 RMSD – Root Mean Square Deviation
 
 Measures how much the protein structure deviates from a reference (usually the starting structure) over time.
 
 ```bash
-gmx rms -s md_10ns.tpr -f md_50ns_center.xtc -o RMSD.xvg -tu ns
+gmx rms -s md_10ns.tpr -f md_10ns_center.xtc -o RMSD.xvg -tu ns
 ```
 At the prompts:
 - For least squares fit – choose
@@ -532,7 +532,7 @@ At the prompts:
 Indicates the compactness of the protein.
 
 ```bash
-gmx gyrate -s md_10ns.tpr -f md_50ns_center.xtc -o gyrate.xvg
+gmx gyrate -s md_10ns.tpr -f md_10ns_center.xtc -o gyrate.xvg
 ```
 
 At prompt:
@@ -544,7 +544,7 @@ At prompt:
 Per‑residue flexibility (requires an index file with residue numbers).
 
 ```bash
-gmx rmsf -s md_10ns.tpr -f md_50ns_center.xtc -o rmsf.xvg -res
+gmx rmsf -s md_10ns.tpr -f md_10ns_center.xtc -o rmsf.xvg -res
 ```
 
 At prompt:
@@ -557,7 +557,7 @@ At prompt:
 Measures the surface area exposed to solvent.
 
 ```bash
-gmx sasa -s md_10ns.tpr -f md_50ns_center.xtc -o sasa.xvg -or resarea.xvg
+gmx sasa -s md_10ns.tpr -f md_10ns_center.xtc -o sasa.xvg -or resarea.xvg
 ```
 At prompt:
 - Select group – 
