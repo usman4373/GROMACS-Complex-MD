@@ -42,13 +42,13 @@ This guide provides a step‑by‑step protocol for setting up and running a mol
 - [Step 7: Post‑processing and analysis](#step-7-postprocessing-and-analysis)
   - [7.1 Remove periodic boundary effects](#71-remove-periodic-boundary-effects)
   - [7.2 Common structural analyses](#72-common-structural-analyses)
-
-
+    - [7.2.1 RMSD – Root Mean Square Deviation](#721-rmsd-root-mean-square-deviation)
+    - [7.2.2 Radius of gyration (rGyr)](#722-radius-of-gyration-rgyr)
+    - [7.2.3 RMSF – Root Mean Square Fluctuation](#723-rmsf-root-mean-square-fluctuation)
+    - [7.2.4 SASA – Solvent Accessible Surface Area](#724-sasa-solvent-accessible-surface-area)
+  - [7.3 Automated plotting and advanced analysis with Dynamics‑Visualizer](#73-automated-plotting-and-advanced-analysis-with-dynamicsvisualizer)
 
 ---
-
-
-
 
 ## Step 1: Prepare topology and initial structure
 
@@ -609,7 +609,7 @@ Measures the surface area exposed to solvent
 gmx sasa -s md_10ns.tpr -f md_10ns_center.xtc -o sasa.xvg -or resarea.xvg
 ```
 Select the appropriate options in the prompts:
-- Select group – 
+- Select group – choose `Protein`, `Backbone`, `lig`, or `Protein_LIG` according to your need
 
 **Outputs:**
 - `sasa.xvg` – total SASA over time (`nm²`)
@@ -617,20 +617,22 @@ Select the appropriate options in the prompts:
 
 ### 7.3 Automated plotting and advanced analysis with Dynamics‑Visualizer
 
-Instead of manually plotting each `.xvg` file, you can use the **[Dynamics‑Visualizer](https://github.com/usman4373/Dynamics-Visualizer)** – a Streamlit‑based app that automates post‑MD analysis and visualization for GROMACS trajectories.
+Instead of manually plotting each `.xvg` file, you can use the **[Dynamics‑Visualizer](https://github.com/usman4373/Dynamics-Visualizer)** – a Streamlit‑based app that automates post‑MD analysis and visualization for GROMACS trajectories
 
 #### What it does
 
-- **Standard analyses** – Reads `.xvg` files (RMSD, RMSF, SASA, radius of gyration) and produces publication‑ready time‑series plots.
-- **Principal Component Analysis (PCA)** – Computes and plots PCA for protein‑only or protein‑ligand systems with time‑based colour bars.
-- **Dynamic Cross‑Correlation Matrix (DCCM)** – Generates heatmaps showing correlated motions between residues (and ligand, if present).
-- **Trajectory visualizer** – Extracts frames from your `.xtc` trajectory, renders PNGs using PyMOL, and assembles MP4 videos of the simulation.
+- **Standard analyses** – Reads `.xvg` files (RMSD, RMSF, SASA, radius of gyration) and produces publication‑ready time‑series plots
+- **Principal Component Analysis (PCA)** – Computes and plots PCA for protein‑only or protein‑ligand systems with time‑based colour bars
+- **Dynamic Cross‑Correlation Matrix (DCCM)** – Generates heatmaps showing correlated motions between residues (and ligand, if present)
+- **Trajectory visualizer** – Extracts frames from your `.xtc` trajectory, renders PNGs using PyMOL, and assembles MP4 videos of the simulation
 
 #### How to use it
 
 1. **Install** the tool (see [its README](https://github.com/usman4373/Dynamics-Visualizer) for conda/pip instructions, including PyMOL).
-2. **Prepare your data** – Use the **centered trajectory** (`md_10ns_noPBC.xtc`) and the run input file (`md_10ns.tpr`) from Step 7.1.
+2. **Prepare your data** – Use the **centered trajectory** (`md_10ns_noPBC.xtc`) and the run input file (`md_10ns_center.xtc`) from Step 7.1.
 3. **Run the app**:
    ```bash
    streamlit run app.py
    ```
+
+---
