@@ -480,132 +480,22 @@ gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o md_10ns.
 gmx mdrun -v -s md_10ns.tpr -deffnm md_10ns -nb gpu -pme gpu -bonded gpu
 ```
 
-> To run `50 ns`, modify nsteps in `md.mdp` accordingly
 > Use `-deffnm` to set the base name of all output files (e.g., `md_50ns.gro`, `md_50ns.xtc`)
+>
+> To run `50 ns` or a different simulation time, modify nsteps in `md.mdp` accordingly
+>
+> 10,000 ps = 10 ns
+>
+> To run 50 ns:
+>
+> nsteps = 50000/0.002 ​= 25000000 nsteps
 
 
-
-
-
-
-
-
-
-
-
-
-
-- Convert CHARMM to GROMACS format:
-- Use `cgenff_charmm2gmx_py3_nx2.py` script downloaded from [MacKerell lab website](https://mackerell.umaryland.edu/charmm_ff.shtml#gromacs)
-
+## Resume crashed simulation
+- To resume a crashed simulation run, add `-cpi` argument and its checkpoint file `md_10ns.cpt`
 ```bash
-python cgenff_charmm2gmx_py3_nx2.py ligand ligand_fix.cgenff.mol2 ligand_fix.str charmm36-feb2026_cgenff-5.0.ff
+gmx mdrun -v -s md_10ns.tpr -deffnm md_10ns -cpi md_10ns.cpt -nb gpu -pme gpu -bonded gpu
 ```
-
-This produces a ligand topology file (e.g., `ligand_fix.itp`) and a `.gro` file.
-
-> **Tip:** If the above command does not run due to compatibility issues, then run this:
-> ```bash
-> conda create -n cgenff python=3.7 -y
-> conda activate cgenff
-> pip install networkx==2.3
-> ```
-
-### 1.3 Convert ligand PDB to GRO
-
-```bash
-gmx editconf -f ligand.pdb -o ligand.gro
-```
-
-### 1.4 Build the protein–ligand complex
-
-- Combine the protein and ligand coordinates into a single `complex.gro`.
-- You can manually edit a `.gro` file or use gmx editconf with `-cat`:
-
-```bash
-gmx editconf -f protein_processed.gro -o complex.gro -cat ligand.gro
-```
-
-Then, merge the topologies:
-
-- Open `protein_topol.top` and `ligand.itp`.
-- Include the ligand `.itp` file inside `topol.top` before the [ molecules ] directive.
-- Add the ligand as a new molecule in the [ molecules ] section:
-
-```
-; Include ligand topology
-#include "ligand.itp"
-
-[ molecules ]
-; name   number
-Protein     1
-Ligand      1
-```
-
-> Keep a backup of your topology file.
-
-## Step 4: Energy minimization
-
-```bash
-gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr
-gmx mdrun -v -s em.tpr -deffnm em -nb gpu
-```
-
-## Step 5: Equilibration (NVT and NPT)
-
-For a protein–ligand complex, we apply position restraints to the ligand (and optionally to the protein backbone) and use separate temperature coupling groups.
-
-### 5.1 Create index file and ligand restraints
-
-```bash
-gmx make_ndx -f ligand.gro -o index_lig.ndx
-```
-
-Then generate restraints for the ligand:
-
-```bash
-gmx genrestr -f ligand.gro -n index_lig.ndx -o posre_lig.itp -fc 1000 1000 1000
-```
-
-Now edit `topol.top` to include `#include "posre_lig.itp"` after the ligand topology include, and before [ molecules ].
-
-### 5.2 Prepare a combined index for temperature coupling
-
-Create an index file that merges protein and ligand into one group (for temperature coupling) or keeps them separate as needed.
-
-```bash
-gmx make_ndx -f em.gro -o index.ndx
-```
-Inside the interactive prompt:
-
-- Type 1 | 13 (assuming 1 = protein, 13 = ligand) → creates group 14 (Protein_Ligand).
-- Type q to quit.
-- Note: The group numbers may differ. Use gmx make_ndx without arguments to list groups.
-
-### 5.3 NVT equilibration (constant temperature)
-
-```bash
-gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -n index.ndx -o nvt.tpr
-gmx mdrun -v -s nvt.tpr -deffnm nvt -nb gpu -pme gpu -bonded gpu
-```
-> The `-r` flag uses the minimized coordinates as a reference for restraints.
-
-### 5.4 NPT equilibration (constant pressure)
-
-```bash
-gmx grompp -f npt.mdp -c nvt.gro -t nvt.cpt -r nvt.gro -p topol.top -n index.ndx -o npt.tpr
-gmx mdrun -v -s npt.tpr -deffnm npt -nb gpu -pme gpu -bonded gpu
-```
-
-## Step 6: Production MD simulation
-
-```bash
-gmx grompp -f md.mdp -c npt.gro -t npt.cpt -p topol.top -n index.ndx -o md_10ns.tpr
-gmx mdrun -v -s md_10ns.tpr -deffnm md_10ns -nb gpu -pme gpu -bonded gpu
-```
-
-- To run `50 ns`, modify nsteps in `md.mdp` accordingly.
-- Use `-deffnm` to set the base name of all output files (e.g., `md_50ns.gro`, `md_50ns.xtc`).
 
 ## Step 7: Post‑processing and analysis
 <p align="justify">After the production MD run, the trajectory may contain artifacts due to periodic boundary conditions (PBC). Molecules can diffuse across box boundaries, making them appear “broken” or “jumping”. The first step is to correct this by centering the protein and removing PBC jumps.</p>
