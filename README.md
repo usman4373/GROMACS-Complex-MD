@@ -15,6 +15,25 @@ This guide provides a step‑by‑step protocol for setting up and running a mol
 
 ## Table of contents
 
+- [Step 1: Prepare topology and initial structure](#step-1-prepare-topology-and-initial-structure)
+  - [1.1 Process the protein](#11-process-the-protein)
+  - [1.2 Process the ligand](#12-process-the-ligand)
+  - [1.3 Generate ligand topology](#13-generate-ligand-topology)
+  - [1.4 Build the protein-ligand complex](#14-build-the-protein-ligand-complex)
+  - [1.5 Build the topology of protein-ligand complex](#15-build-the-topology-of-protein-ligand-complex)
+
+- [Step 2: Solvation](#step-2-solvation)
+  - [2.1 Define the simulation box](#21-define-the-simulation-box)
+  - [2.2 Fill the box with water](#22-fill-the-box-with-water)
+
+- [Step 3: Add ions to neutralize the system](#step-3-add-ions-to-neutralize-the-system)
+
+
+
+
+
+
+
 - [Step 1: Prepare topology and initial structure](#step#1:#prepare#topology#and#initial#structure)
     - [1.1 Process the protein](1.1#process#the#protein)
     - [1.2 Process the ligand](1.2#process#the#ligand)
