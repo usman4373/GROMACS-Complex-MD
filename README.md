@@ -33,6 +33,15 @@ This guide provides a step‑by‑step protocol for setting up and running a mol
 - [Step 5: Equilibration (NVT and NPT)](#step-5-equilibration-nvt-and-npt)
   - [5.1 Create index file and ligand restraints](#51-create-index-file-and-ligand-restraints)
   - [5.2 Prepare a combined index for temperature coupling](#52-prepare-a-combined-index-for-temperature-coupling)
+  - [5.3 NVT equilibration (constant temperature)](#53-nvt-equilibration-constant-temperature)
+  - [5.4 NPT equilibration (constant pressure)](#54-npt-equilibration-constant-pressure)
+
+- [Step 6: Production MD simulation](#step-6-production-md-simulation)
+- [Resume crashed simulation](#resume-crashed-simulation)
+
+- [Step 7: Post‑processing and analysis](#step-7-post‑processing-and-analysis)
+  - [7.1 Remove periodic boundary effects](#71-remove-periodic-boundary-effects)
+  - [7.2 Common structural analyses](#72-common-structural-analyses)
 
 
 
